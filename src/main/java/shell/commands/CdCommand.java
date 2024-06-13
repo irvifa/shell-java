@@ -20,7 +20,12 @@ public class CdCommand implements CommandInterface {
         Path targetPath;
 
         if (path.equals("~")) {
-            targetPath = Paths.get(System.getProperty("user.home"));
+            String homeDir = System.getenv("HOME");
+            if (homeDir == null) {
+                System.err.println("cd: HOME environment variable not set");
+                return true;
+            }
+            targetPath = Paths.get(homeDir);
         } else {
             targetPath = Paths.get(path);
             if (!targetPath.isAbsolute()) {
