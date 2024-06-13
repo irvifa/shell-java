@@ -4,6 +4,8 @@ package shell.commands;
 import shell.CommandInterface;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class CdCommand implements CommandInterface {
@@ -15,7 +17,18 @@ public class CdCommand implements CommandInterface {
         }
 
         String path = args.get(0);
-        File dir = new File(path);
+        Path targetPath;
+
+        if (path.equals("~")) {
+            targetPath = Paths.get(System.getProperty("user.home"));
+        } else {
+            targetPath = Paths.get(path);
+            if (!targetPath.isAbsolute()) {
+                targetPath = Paths.get(System.getProperty("user.dir")).resolve(targetPath).normalize();
+            }
+        }
+
+        File dir = targetPath.toFile();
 
         if (dir.exists() && dir.isDirectory()) {
             System.setProperty("user.dir", dir.getAbsolutePath());
