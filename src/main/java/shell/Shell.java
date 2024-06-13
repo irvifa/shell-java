@@ -9,13 +9,14 @@ import java.util.*;
 
 public class Shell {
     private final Map<String, CommandInterface> commands = new HashMap<>();
-    private final Set<String> builtins = new HashSet<>(Arrays.asList("exit", "echo", "cd", "type"));
+    private final Set<String> builtins = new HashSet<>(Arrays.asList("exit", "echo", "cd", "type", "pwd"));
 
     public Shell() {
         commands.put("exit", new ExitCommand());
         commands.put("echo", new EchoCommand());
         commands.put("cd", new CdCommand());
         commands.put("type", new TypeCommand(builtins));
+        commands.put("pwd", new PwdCommand());
     }
 
     public void run() {

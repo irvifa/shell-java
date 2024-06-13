@@ -1,7 +1,8 @@
-// CdCommand.java
+// src/shell/commands/CdCommand.java
 package shell.commands;
 
 import shell.CommandInterface;
+
 import java.io.File;
 import java.util.List;
 
@@ -14,11 +15,8 @@ public class CdCommand implements CommandInterface {
         }
 
         String path = args.get(0);
-        if (path.equals("~")) {
-            path = System.getProperty("user.home");
-        }
-
         File dir = new File(path);
+
         if (dir.exists() && dir.isDirectory()) {
             System.setProperty("user.dir", dir.getAbsolutePath());
         } else {
